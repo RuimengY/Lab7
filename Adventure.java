@@ -1,6 +1,15 @@
-package lab7;
 
 public class Adventure {
+    // 将每局的金币的真假可能情况在一开始就确定
+    private static Money[] moneys = new Money[12];
+
+    // moneys的构造方法
+    public static void setMoney(Money[] moneys) {
+        for (int i = 0; i < moneys.length; i++) {
+            moneys[i] = new Money(i);
+        }
+    }
+
     // 游戏欢迎界面的实现
     public static void startPage() {
         System.out.println("****************************************");
@@ -15,7 +24,6 @@ public class Adventure {
     // 每一关的实现
     // 如果冒险者和对手为了金币而战,胜者会获得,失败者的生命值会减少2.生命值多的一方有0.7的概率获胜,如果生命值相同,则双方有都0.5的概率获胜.如果对手的生命值降到0,则冒险者会在接下来的每一关都获得金币.每一关结束时,在控制台输出每个生物的生命值和当前拥有的金币.
     public static void everyLevel(Creature player, Creature enemy, String destination, int level) {
-
         // 每一关开始的时候冒险者和对手的生命值＋1(如果对手生命值为0,则只有冒险者的生命值＋1)
         if (level != 1 && enemy.getLife() != 0) {
             player.setLife(player.getLife() + 1);
@@ -23,9 +31,18 @@ public class Adventure {
         } else if (level != 1 && enemy.getLife() == 0) {
             player.setLife(player.getLife() + 1);
         }
+        Money money = moneys[level - 1];
+        player.attack(enemy, money);
 
-        player.attack(enemy);
+    }
 
+    // 1.奖励关卡
+    public static void rewardLevel(Creature player, Creature enemy, String destination, int level) {
+        System.out.println("进入奖励关卡：" + level);
+        // player.setGold(player.getGold() + 2);
+        Money money = new Money(level);
+        player.setGold(player.getGold() + money.getValue());
+        enemy.setGold(enemy.getGold() + money.getValue());
     }
 
     // 输出每个生物的生命值和当前拥有的金币
@@ -72,6 +89,7 @@ public class Adventure {
 
     public static void main(String[] args) {
         startPage();
+        setMoney(moneys);
         String destination = getDestination();
         // 创建玩家的creature
         Creature player = new Creature();
@@ -79,13 +97,25 @@ public class Adventure {
         Creature enemy = Creature.randomEnemy();
         // 进行关卡，一共12关
         boolean flag = true;
+        ProductList productList = new ProductList();
         for (int i = 1; i <= 12 && flag; i++) {
             flag = false;
-            everyLevel(player, enemy, destination, i);
+            if (i % 3 != 0) {
+                everyLevel(player, enemy, destination, i);
+            } else {
+                rewardLevel(player, enemy, destination, i);
+            }
             printAfterLevel(player, enemy, i);
             if (player.getLife() == 0 || i == 12) {
                 break;
             }
+
+            if (productList.getProducts().size() == 0) {
+                System.out.println("商品售罄");
+            } else
+                productList.outputProduct();
+            productList.inputProduct();
+
             System.out.println("Do you want to continue?Type'y'to continue, other keys to exit.");
             String input = System.console().readLine();
             if (input.equals("y")) {
