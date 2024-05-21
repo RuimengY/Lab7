@@ -2,18 +2,12 @@
 public class Adventure {
     // 将每局的金币的真假可能情况在一开始就确定
     private static Money[] moneys = new Money[12];
-    private int level;
 
     // moneys的构造方法
     public static void setMoney(Money[] moneys) {
         for (int i = 0; i < moneys.length; i++) {
             moneys[i] = new Money(i);
         }
-    }
-
-    // level的set方法
-    public void setLevel(int level) {
-        this.level = level;
     }
 
     // 游戏欢迎界面的实现
@@ -27,56 +21,9 @@ public class Adventure {
         System.out.println("****************************************");
     }
 
-    // 游戏关卡的输入确认
-    public void getLevel() {
-        System.out.println("please enter the number of level: ");
-        // 对于输入进行检验
-        while (true) {
-            String level = System.console().readLine();
-            try {
-                this.setLevel(Integer.parseInt(level));
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("please enter a number: ");
-            }
-        }
-    }
-
-    // 每一关的实现
-    // 如果冒险者和对手为了金币而战,胜者会获得,失败者的生命值会减少2.生命值多的一方有0.7的概率获胜,如果生命值相同,则双方有都0.5的概率获胜.如果对手的生命值降到0,则冒险者会在接下来的每一关都获得金币.每一关结束时,在控制台输出每个生物的生命值和当前拥有的金币.
-    public static void everyLevel(Creature player, Creature enemy, String destination, int level) {
-        if (player.getSkill()[0] == 1) {
-            player.setLife(player.getLife() + 2);
-        }
-
-        // 每一关开始的时候冒险者和对手的生命值＋1(如果对手生命值为0,则只有冒险者的生命值＋1)
-        if (level != 1 && enemy.getLife() != 0) {
-            player.setLife(player.getLife() + 1);
-            enemy.setLife(enemy.getLife() + 1);
-        } else if (level != 1 && enemy.getLife() == 0) {
-            player.setLife(player.getLife() + 1);
-        }
-        Money money = moneys[level - 1];
-        player.attack(enemy, money);
-        int[] skill = { 0, 0, 0 };
-        player.setSkill(skill);
-
-    }
-
-    // 1.奖励关卡
-    public static void rewardLevel(Creature player, Creature enemy, String destination, int level) {
-        System.out.println("进入奖励关卡：" + level);
-        // player.setGold(player.getGold() + 2);
-        Money money = new Money(level);
-        player.setGold(player.getGold() + money.getValue());
-        enemy.setGold(enemy.getGold() + money.getValue());
-        int[] skill = { 0, 0, 0 };
-        player.setSkill(skill);
-    }
-
     // 输出每个生物的生命值和当前拥有的金币
     public static void printAfterLevel(Creature player, Creature enemy, int level) {
-
+        System.out.println();
         System.out.println("Level: " + level);
         System.out.println("Your life: " + player.getLife());
         System.out.println("Your gold: " + player.getGold());
@@ -126,21 +73,29 @@ public class Adventure {
         Creature player = new Creature();
         // 创建敌人的creature
         Creature enemy = Creature.randomEnemy();
-        // 进行关卡，一共12关
-        // boolean flag = true;
+        // 创建背包
+        Package pack = new Package();
+
+        // 进行关卡
         ProductList productList = new ProductList();
-        for (int i = 1; i <= 12; i++) {
+        Level level = new Level();
+        level.setLevel();
+        for (int i = 1; i <= level.getLevel(); i++) {
             if (i % 3 != 0) {
-                everyLevel(player, enemy, destination, i);
+                level.everyLevel(player, enemy, destination, moneys, i);
             } else {
-                rewardLevel(player, enemy, destination, i);
+                level.rewardLevel(player, enemy, destination, i);
             }
             printAfterLevel(player, enemy, i);
             if (player.getLife() == 0 || i == 12) {
                 break;
             }
-            productList.judgePrint(player);
+            if (i != level.getLevel()) {
+                productList.judgePrint(pack, player);// 将要买入的商品放到背包中
+                pack.skillFromPackage(productList, player);// 考虑是否将技能从背包中拿出来
+            }
         }
         printEnd(destination, player, enemy);
     }
+
 }

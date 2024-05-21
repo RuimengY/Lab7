@@ -3,7 +3,7 @@ class Creature {
     private String name;
     private int life;
     private int gold;
-    private int[] skill = new int[3];
+    private int[] skill = new int[3]; // 此时的skill是指在下一关能用到的skill
 
     public Creature(String name, int life, int gold) {
         this.name = name;
@@ -30,10 +30,6 @@ class Creature {
         return gold;
     }
 
-    public int[] getSkill() {
-        return skill;
-    }
-
     // 用于更新生命值和金币的setter方法
     public void setLife(int life) {
         this.life = life;
@@ -43,8 +39,21 @@ class Creature {
         this.gold = gold;
     }
 
+    public int[] getSkill() {
+        return skill;
+    }
+
     public void setSkill(int[] skill) {
         this.skill = skill;
+    }
+
+    public void setSkill(int index) {
+        for (int i = 0; i < skill.length; i++) {
+            if (i == index) {
+                skill[i] = 1;
+            } else
+                skill[i] = 0;
+        }
     }
 
     // 随机抽选敌人的角色和生命值。如果角色是Dwarf，则生命值为9；如果角色是Elf，则生命值为7；如果角色为Orc，则生命值为5

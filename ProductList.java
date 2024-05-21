@@ -11,8 +11,13 @@ public class ProductList {
         products.add(new String[] { "3", "闪避符咒", "3" });
     }
 
+    // 根据索引输入药品名称
+    public String getProductName(int index) {
+        return products.get(index)[1];
+    }
+
     // 写一个输入商品序号的方法
-    public void inputProduct(String number, Creature player) {
+    public void inputProduct(String number, Package package1, Creature player) {
         for (int j = 0; j < products.size(); j++) {
             if (number.equals(products.get(j)[0])) {
                 System.out.println("商品名：" + products.get(j)[1] + "，价格：" + products.get(j)[2]);
@@ -38,7 +43,7 @@ public class ProductList {
         return products;
     }
 
-    public void judgePrint(Creature player) {
+    public void judgePrint(Package package1, Creature player) {
         if (this.getProducts().size() == 0) {
             System.out.println("商品售罄");
             while (true) {
@@ -87,7 +92,7 @@ public class ProductList {
                             continue;
                         } else {
                             // 能够购买的情况
-                            this.inputProduct(input, player);
+                            this.inputProduct(input, package1, player);
                             int[] skill = { 0, 0, 0 };
                             for (int j = 0; j < 3; j++) {
                                 if (j == number - 1) {
@@ -95,7 +100,7 @@ public class ProductList {
                                 } else
                                     skill[j] = 0;
                             }
-                            player.setSkill(skill);
+                            package1.setSkill(skill);// 不直接给玩家，放入背包中
                             break;
                         }
                     } else if (input.equals("y")) {
