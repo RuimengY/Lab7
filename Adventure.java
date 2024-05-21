@@ -2,12 +2,18 @@
 public class Adventure {
     // 将每局的金币的真假可能情况在一开始就确定
     private static Money[] moneys = new Money[12];
+    private int level;
 
     // moneys的构造方法
     public static void setMoney(Money[] moneys) {
         for (int i = 0; i < moneys.length; i++) {
             moneys[i] = new Money(i);
         }
+    }
+
+    // level的set方法
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     // 游戏欢迎界面的实现
@@ -21,9 +27,28 @@ public class Adventure {
         System.out.println("****************************************");
     }
 
+    // 游戏关卡的输入确认
+    public void getLevel() {
+        System.out.println("please enter the number of level: ");
+        // 对于输入进行检验
+        while (true) {
+            String level = System.console().readLine();
+            try {
+                this.setLevel(Integer.parseInt(level));
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("please enter a number: ");
+            }
+        }
+    }
+
     // 每一关的实现
     // 如果冒险者和对手为了金币而战,胜者会获得,失败者的生命值会减少2.生命值多的一方有0.7的概率获胜,如果生命值相同,则双方有都0.5的概率获胜.如果对手的生命值降到0,则冒险者会在接下来的每一关都获得金币.每一关结束时,在控制台输出每个生物的生命值和当前拥有的金币.
     public static void everyLevel(Creature player, Creature enemy, String destination, int level) {
+        if (player.getSkill()[0] == 1) {
+            player.setLife(player.getLife() + 2);
+        }
+
         // 每一关开始的时候冒险者和对手的生命值＋1(如果对手生命值为0,则只有冒险者的生命值＋1)
         if (level != 1 && enemy.getLife() != 0) {
             player.setLife(player.getLife() + 1);
@@ -33,6 +58,8 @@ public class Adventure {
         }
         Money money = moneys[level - 1];
         player.attack(enemy, money);
+        int[] skill = { 0, 0, 0 };
+        player.setSkill(skill);
 
     }
 
@@ -43,10 +70,13 @@ public class Adventure {
         Money money = new Money(level);
         player.setGold(player.getGold() + money.getValue());
         enemy.setGold(enemy.getGold() + money.getValue());
+        int[] skill = { 0, 0, 0 };
+        player.setSkill(skill);
     }
 
     // 输出每个生物的生命值和当前拥有的金币
     public static void printAfterLevel(Creature player, Creature enemy, int level) {
+
         System.out.println("Level: " + level);
         System.out.println("Your life: " + player.getLife());
         System.out.println("Your gold: " + player.getGold());
@@ -77,9 +107,10 @@ public class Adventure {
         System.out.println("Destination: " + destination);
         if (player.getLife() == 0) {
             System.out.println("Winner: " + enemy.getName());
-        } else {
+        } else if (enemy.getLife() == 0) {
             System.out.println("Winner: " + player.getName());
-        }
+        } else
+            System.out.println("Winner: " + enemy.getName() + " and " + player.getName());
         System.out.println("Your total gold: " + player.getGold());
         System.out.println("Enemy's total gold: " + enemy.getGold());
         // 用百分比的形式输出冒险者的评分(player.getGold()/(player.getGold() + enemy.getGold()))
@@ -96,10 +127,9 @@ public class Adventure {
         // 创建敌人的creature
         Creature enemy = Creature.randomEnemy();
         // 进行关卡，一共12关
-        boolean flag = true;
+        // boolean flag = true;
         ProductList productList = new ProductList();
-        for (int i = 1; i <= 12 && flag; i++) {
-            flag = false;
+        for (int i = 1; i <= 12; i++) {
             if (i % 3 != 0) {
                 everyLevel(player, enemy, destination, i);
             } else {
@@ -109,18 +139,7 @@ public class Adventure {
             if (player.getLife() == 0 || i == 12) {
                 break;
             }
-
-            if (productList.getProducts().size() == 0) {
-                System.out.println("商品售罄");
-            } else
-                productList.outputProduct();
-            productList.inputProduct();
-
-            System.out.println("Do you want to continue?Type'y'to continue, other keys to exit.");
-            String input = System.console().readLine();
-            if (input.equals("y")) {
-                flag = true;
-            }
+            productList.judgePrint(player);
         }
         printEnd(destination, player, enemy);
     }

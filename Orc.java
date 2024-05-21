@@ -25,9 +25,15 @@ public class Orc extends Creature {
                 if (money.getrealCoin()) {
                     Hobbit.setGold(Hobbit.getGold() + money.getValue());
                 }
-                this.setLife(this.getLife() - 2);
+                if (Hobbit.getSkill()[0] == 1) {
+                    this.setLife(this.getLife() - 3);
+                } else {
+                    this.setLife(this.getLife() - 2);
+                }
             } else {
-                Hobbit.setLife(Hobbit.getLife() - 2);
+                if (Hobbit.getSkill()[1] == 0) {
+                    Hobbit.setLife(Hobbit.getLife() - 2);
+                }
                 if (money.getrealCoin()) {
                     this.setGold(this.getGold() + 1);
                 }
@@ -37,9 +43,15 @@ public class Orc extends Creature {
                 if (money.getrealCoin()) {
                     Hobbit.setGold(Hobbit.getGold() + money.getValue());
                 }
-                this.setLife(this.getLife() - 2);
+                if (Hobbit.getSkill()[0] == 1) {
+                    this.setLife(this.getLife() - 3);
+                } else {
+                    this.setLife(this.getLife() - 2);
+                }
             } else {
-                Hobbit.setLife(Hobbit.getLife() - 2);
+                if (Hobbit.getSkill()[1] == 0) {
+                    Hobbit.setLife(Hobbit.getLife() - 2);
+                }
                 if (money.getrealCoin()) {
                     this.setGold(this.getGold() + 1);
                 }
@@ -49,9 +61,15 @@ public class Orc extends Creature {
                 if (money.getrealCoin()) {
                     Hobbit.setGold(Hobbit.getGold() + money.getValue());
                 }
-                this.setLife(this.getLife() - 2);
+                if (Hobbit.getSkill()[0] == 1) {
+                    this.setLife(this.getLife() - 3);
+                } else {
+                    this.setLife(this.getLife() - 2);
+                }
             } else {
-                Hobbit.setLife(Hobbit.getLife() - 2);
+                if (Hobbit.getSkill()[1] == 0) {
+                    Hobbit.setLife(Hobbit.getLife() - 2);
+                }
                 if (money.getrealCoin()) {
                     this.setGold(this.getGold() + 1);
                 }

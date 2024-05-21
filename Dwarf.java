@@ -20,12 +20,18 @@ public class Dwarf extends Creature {
                 // 获得的真金币数量
                 Hobbit.setGold(Hobbit.getGold() + money.getValue());
             }
-            this.setLife(this.getLife() - 2);
+            if (Hobbit.getSkill()[0] == 1) {
+                this.setLife(this.getLife() - 3);
+            } else {
+                this.setLife(this.getLife() - 2);
+            }
         } else {
             if (money.getrealCoin()) {
                 this.setGold(this.getGold() + money.getValue());
             }
-            Hobbit.setLife(Hobbit.getLife() - 2);
+            if (Hobbit.getSkill()[1] == 1) {
+                Hobbit.setLife(Hobbit.getLife() - 2);
+            }
         }
 
     }

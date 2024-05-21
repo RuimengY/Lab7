@@ -3,6 +3,7 @@ class Creature {
     private String name;
     private int life;
     private int gold;
+    private int[] skill = new int[3];
 
     public Creature(String name, int life, int gold) {
         this.name = name;
@@ -29,6 +30,10 @@ class Creature {
         return gold;
     }
 
+    public int[] getSkill() {
+        return skill;
+    }
+
     // 用于更新生命值和金币的setter方法
     public void setLife(int life) {
         this.life = life;
@@ -36,6 +41,10 @@ class Creature {
 
     public void setGold(int gold) {
         this.gold = gold;
+    }
+
+    public void setSkill(int[] skill) {
+        this.skill = skill;
     }
 
     // 随机抽选敌人的角色和生命值。如果角色是Dwarf，则生命值为9；如果角色是Elf，则生命值为7；如果角色为Orc，则生命值为5
@@ -86,43 +95,16 @@ class Creature {
                 // 调用Orc类的方法
                 ((Orc) enemy).fight(this, money);
             }
+            // 冒险家受伤
+            if (this.getLife() <= 2) {
+                this.setLife(this.getLife() - 1);
+            } else {
+                this.setLife(this.getLife() + 1);
+            }
 
         }
     }
 
     public void fight(Creature enemy, Money money) {
-
     }
-    /*
-     * public void fight(Creature enemy) {
-     * int playerLife = this.getLife();
-     * int enemyLife = enemy.getLife();
-     * double random = Math.random();
-     * if (playerLife > enemyLife) {
-     * if (random < 0.7) {
-     * this.setGold(this.getGold() + 1);
-     * enemy.setLife(enemy.getLife() - 2);
-     * } else {
-     * this.setLife(this.getLife() - 2);
-     * enemy.setGold(enemy.getGold() + 1);
-     * }
-     * } else if (playerLife < enemyLife) {
-     * if (random < 0.7) {
-     * this.setLife(this.getLife() - 2);
-     * enemy.setGold(enemy.getGold() + 1);
-     * } else {
-     * this.setGold(this.getGold() + 1);
-     * enemy.setLife(enemy.getLife() - 2);
-     * }
-     * } else {
-     * if (random < 0.5) {
-     * this.setGold(this.getGold() + 1);
-     * enemy.setLife(enemy.getLife() - 2);
-     * } else {
-     * this.setLife(this.getLife() - 2);
-     * enemy.setGold(enemy.getGold() + 1);
-     * }
-     * }
-     * }
-     */
 }
