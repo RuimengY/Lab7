@@ -52,7 +52,6 @@ public class ProductList {
                 String input = System.console().readLine();
                 if (!(input.equals("y"))) {
                     System.out.println("输入错误，请重新输入：");
-                    continue;
                 } else
                     break;
             }

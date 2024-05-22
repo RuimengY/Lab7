@@ -1,29 +1,34 @@
 package com.exercise.demo;
 
 import javafx.application.Application;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
     public class StoreFrame extends Application {
         private Pane pane = new Pane();
         private TableView<Product> table = new TableView<>();
-        private ObservableList<Product> data =
-                FXCollections.observableArrayList(
-                        new Product(1, "生命药剂", "恢复冒险者2点生命值", 2),
-                        new Product(2, "暴击药剂", "如果冒险者购买后,下一关卡发生了战斗并获胜,可以让对手生命值减少3", 2),
-                        new Product(3, "闪避符咒", "如果冒险者购买后,下一关卡发生了战斗并战败,可以免除生命值的减少", 3)
-                );
-
+        private NewProductList newProductList = new NewProductList();
+        private Package myPackage = new Package();
+        private Creature player = new Creature();
+        //package的get方法
+        public Package getMyPackage() {
+            return myPackage;
+        }
+        public void setMyPackage(Package myPackage) {
+            this.myPackage = myPackage;
+        }
+        //player的get方法
+        public Creature getPlayer() {
+            return player;
+        }
+        public  void setPlayer(Creature player) {
+            this.player = player;
+        }
         @Override
         public void start(Stage primaryStage) {
 
@@ -51,8 +56,8 @@ import javafx.stage.Stage;
 
             TableColumn<Product, Integer> priceCol = new TableColumn<Product, Integer>("Price");
             priceCol.setCellValueFactory(new PropertyValueFactory<Product, Integer>("price"));
-
-            table.setItems(data);
+            //data的内容已经经过remove()了
+            table.setItems(newProductList.getData());
             table.getColumns().addAll(indexCol,nameCol, workCol,priceCol);
             //设置表格内字体的大小
             table.setStyle("-fx-font-size: 13");
@@ -66,7 +71,7 @@ import javafx.stage.Stage;
             table.setOnMouseClicked(event -> {
                 Product product = table.getSelectionModel().getSelectedItem();
                 System.out.println("商品名：" + product.getName() + "，价格：" + product.getPrice());
-
+                newProductList.purchase(product, myPackage,player);
             });
         }
         public void TextSet(){

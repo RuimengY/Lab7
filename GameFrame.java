@@ -8,19 +8,23 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class GameFrame extends Application {
-    private int level;
     private String destination;
     private Pane pane = new Pane();
+    private Package myPackage = new Package();
+    private Creature player = new Creature();
+    private Creature enemy = Creature.randomEnemy();
+    private Level level = new Level();
+    NewProductList newProductList = new NewProductList();
 
 
     // private Text levelText;
     //level的get方法
-    public int getLevel() {
+    public Level getLevel() {
         return level;
     }
 
     //level的set方法
-    public void setLevel(int level) {
+    public void setLevel(Level level) {
         this.level = level;
     }
 
@@ -33,7 +37,20 @@ public class GameFrame extends Application {
     public void setDestination(String destination) {
         this.destination = destination;
     }
-
+    //package的get方法
+    public Package getMyPackage() {
+        return myPackage;
+    }
+    public void setMyPackage(Package myPackage) {
+        this.myPackage = myPackage;
+    }
+    //player的get方法
+    public Creature getPlayer() {
+        return player;
+    }
+    public  void setPlayer(Creature player) {
+        this.player = player;
+    }
     @Override
     public void start(Stage stage) {
         //for (int i = 1; i <= level; i++) {
@@ -52,7 +69,7 @@ public class GameFrame extends Application {
         if (everyLevel % 3 == 0) {
             levelText.setText("[奖励关卡]");
         } else {
-            levelText.setText("Level: " + (level + 1));
+            levelText.setText("Level: " + (everyLevel + 1));
         }
         //设置levelText的位置
         levelText.relocate(350, 70);
@@ -75,6 +92,8 @@ public class GameFrame extends Application {
         //点击按钮弹出一个新的界面
         storeButton.setOnAction(e -> {
             StoreFrame storeFrame = new StoreFrame();
+            storeFrame.setMyPackage(myPackage);
+            storeFrame.setPlayer(player);
             storeFrame.start(new Stage());
         });
     }

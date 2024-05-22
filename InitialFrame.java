@@ -12,17 +12,17 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class InitialFrame extends Application {
-    private int level;
+    private Level level;
     private String destination;
     private Pane pane = new Pane();
 
     //level的get方法
-    public int getLevel() {
+    public Level getLevel() {
         return level;
     }
 
     //level的set方法
-    public void setLevel(int level) {
+    public void setLevel(Level level) {
         this.level = level;
     }
 
@@ -128,7 +128,9 @@ public class InitialFrame extends Application {
             } else {
                 // 在这里处理用户的输入
                 System.out.println("Level: " + level);
-                setLevel(Integer.parseInt(level));
+                Level level1 = new Level();
+                level1.setAllLevel(Integer.parseInt(level));
+                setLevel(level1);
             }
         });
         // 设置输入框和提交按钮的位置
@@ -148,7 +150,7 @@ public class InitialFrame extends Application {
         startButton.setPrefSize(150, 80);
         startButton.setOnAction(e -> {
             //如果此时level和destination都不为空，则进入游戏界面
-            if (getLevel() != 0 && getDestination() != null) {
+            if (getLevel() != null && getDestination() != null) {
                 // 在这里添加开始游戏的代码
                 GameFrame gameFrame = new GameFrame();
                 gameFrame.setLevel(getLevel());

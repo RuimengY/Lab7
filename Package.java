@@ -61,4 +61,12 @@ public class Package {
         }
 
     }
+    public void addProduct(Product product){
+        for (int i = 0; i < skill.length; i++) {
+            if (i == product.getIndex() - 1){
+                skill[i] = 1;
+                break;
+            }
+        }
+    }
 }

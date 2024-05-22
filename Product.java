@@ -31,4 +31,5 @@ public class Product {
     public int getPrice() {
         return price.get();
     }
+
 }
