@@ -1,3 +1,4 @@
+package com.exercise.demo;
 
 public class Adventure {
     // 将每局的金币的真假可能情况在一开始就确定
@@ -94,8 +95,12 @@ public class Adventure {
                 productList.judgePrint(pack, player);// 将要买入的商品放到背包中
                 pack.skillFromPackage(productList, player);// 考虑是否将技能从背包中拿出来
             }
+
+
         }
         printEnd(destination, player, enemy);
     }
 
 }
+
+

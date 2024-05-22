@@ -1,3 +1,5 @@
+package com.exercise.demo;
+
 public class Level {
     private int allLevel;
 

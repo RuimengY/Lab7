@@ -1,3 +1,4 @@
+package com.exercise.demo;
 
 class Creature {
     private String name;

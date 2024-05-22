@@ -1,3 +1,5 @@
+package com.exercise.demo;
+
 public class Package {
     private int[] skill = new int[3];
 

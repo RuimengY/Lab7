@@ -1,3 +1,5 @@
+package com.exercise.demo;
+
 public class Elf extends Creature {
     private double winRate = 0.8;
 

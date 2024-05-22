@@ -1,3 +1,5 @@
+package com.exercise.demo;
+
 public class Money {
     // money的面值有1美元和2美元两种
     private int value;

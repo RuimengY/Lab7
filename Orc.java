@@ -1,3 +1,5 @@
+package com.exercise.demo;
+
 public class Orc extends Creature {
     // 兽人的生命值和生命值有关，需要在战争时setter方法
     private double winRate;
