@@ -18,6 +18,8 @@ public class InitialFrame extends Application {
     private Creature enemy = Creature.randomEnemy();
     private Creature player = new Creature();
     private Money[] money;
+    private Package pack = new Package();
+    private NewProductList newProductList = new NewProductList();
 
 
     //destination的get方法
@@ -164,6 +166,8 @@ public class InitialFrame extends Application {
                 }
                 gameFrame.setEnemy(enemy);//在进入游戏之前把每一关的enemy确定好
                 gameFrame.setPlayer(player);//在进入游戏之前把player设计好
+                gameFrame.setMyPackage(pack);//在进入游戏之前把背包设计好
+                gameFrame.setNewProductList(newProductList);//在进入游戏之前把商品列表设计好
                 gameFrame.setDestination(getDestination());//将目的地确定
                 gameFrame.start(primaryStage);
                 System.out.println("开始游戏");

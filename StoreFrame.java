@@ -12,9 +12,9 @@ import javafx.stage.Stage;
     public class StoreFrame extends Application {
         private Pane pane = new Pane();
         private TableView<Product> table = new TableView<>();
-        private NewProductList newProductList = new NewProductList();
-        private Package myPackage = new Package();
-        private Creature player = new Creature();
+        private NewProductList newProductList ;
+        private Package myPackage;
+        private Creature player;
         //package的get方法
         public Package getMyPackage() {
             return myPackage;
@@ -29,9 +29,14 @@ import javafx.stage.Stage;
         public  void setPlayer(Creature player) {
             this.player = player;
         }
+        public NewProductList getNewProductList() {
+            return newProductList;
+        }
+        public void setNewProductList(NewProductList newProductList) {
+            this.newProductList = newProductList;
+        }
         @Override
         public void start(Stage primaryStage) {
-
             TableSet();
             TextSet();
             Scene scene = new Scene(pane);
@@ -69,9 +74,15 @@ import javafx.stage.Stage;
             pane.getChildren().addAll(table);
             //如果点击表格的某一行，会购买该物品
             table.setOnMouseClicked(event -> {
+                //创建一个新的窗口确定是否购买
+                JudgeFrame judgeFrame = new JudgeFrame();
+                judgeFrame.start(new Stage());
+
                 Product product = table.getSelectionModel().getSelectedItem();
                 System.out.println("商品名：" + product.getName() + "，价格：" + product.getPrice());
                 newProductList.purchase(product, myPackage,player);
+                //table只能被点击一次
+                table.setDisable(true);
             });
         }
         public void TextSet(){

@@ -12,19 +12,22 @@ import javafx.stage.Stage;
 public class GameFrame extends Application {
     private String destination;
     private Pane pane = new Pane();
-    private Package myPackage = new Package();//一开始背包中为空
+    private Package myPackage;
     private Creature player;
     private Creature enemy;
     private Level level;
     private Money[] money;
     private Button nextLevelButton = new Button("下一关");
+    private NewProductList newProductList;
 
 
     public void setMoney(Money[] moneys) {
         this.money = moneys;
     }
 
-    NewProductList newProductList = new NewProductList();
+    public void setNewProductList(NewProductList newProductList) {
+        this.newProductList = newProductList;
+    }
 
 
     // private Text levelText;
@@ -129,7 +132,11 @@ public class GameFrame extends Application {
         //点击按钮弹出一个新的界面
         storeButton.setOnAction(e -> {
             StoreFrame storeFrame = new StoreFrame();
+            System.out.println("newProductList: " + newProductList.getData());
+            storeFrame.setNewProductList(newProductList);
+
             storeFrame.setMyPackage(myPackage);
+            //System.out.println("package "+ myPackage.getSkill(0));
             storeFrame.setPlayer(player);
             storeFrame.start(new Stage());
         });
@@ -150,6 +157,7 @@ public class GameFrame extends Application {
         playerStateButton.setOnAction(e -> {
             PlayerStateFrame playerStateFrame = new PlayerStateFrame();
             playerStateFrame.setPlayer(player);
+            playerStateFrame.setPackage(myPackage);
             playerStateFrame.start(new Stage());
         });
     }
@@ -263,6 +271,8 @@ public class GameFrame extends Application {
             gameFrame.setPlayer(player);
             gameFrame.setEnemy(enemy);
             gameFrame.setDestination(destination);
+            gameFrame.setNewProductList(newProductList);
+            gameFrame.setMyPackage(myPackage);
             gameFrame.start(stage);
         });
     }

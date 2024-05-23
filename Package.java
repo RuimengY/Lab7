@@ -1,10 +1,19 @@
 package com.exercise.demo;
 
 public class Package {
+    //构造方法
+    public Package() {
+        skill[0] = 0;
+        skill[1] = 0;
+        skill[2] = 0;
+    }
     private int[] skill = new int[3];
 
     public int[] getSkill() {
         return skill;
+    }
+    public int getSkill(int index){
+        return skill[index];
     }
 
     public void setSkill(int[] skill) {
