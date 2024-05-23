@@ -4,6 +4,7 @@ class Creature {
     private String name;
     private int life;
     private int gold;
+    private Money[] money = new Money[20]; //指在每一关获得的钱(没有获得的为null)
     private int[] skill = new int[3]; // 此时的skill是指在下一关能用到的skill
 
     public Creature(String name, int life, int gold) {
@@ -56,6 +57,18 @@ class Creature {
                 skill[i] = 0;
         }
     }
+    public Money[] getMoney() {
+        return money;
+    }
+    public void setMoney(Money[] money) {
+        this.money = money;
+    }
+    public void setMoney(Money money, int index) {
+        this.money[index] = money;
+    }
+    public Money getMoney(int index) {
+        return money[index];
+    }
 
     // 随机抽选敌人的角色和生命值。如果角色是Dwarf，则生命值为9；如果角色是Elf，则生命值为7；如果角色为Orc，则生命值为5
     public static Creature randomEnemy() {
@@ -71,7 +84,8 @@ class Creature {
         return enemy;
     }
 
-    public void attack(Creature enemy, Money money) {
+    public Creature attack(Creature enemy, Money money,int levelNow) {
+        Creature winner = null;
         // 如果敌人是矮人而且敌人的生命值小于等于2，那么霍比特人直接获得金币
         if (enemy instanceof Dwarf && enemy.getLife() <= 2) {
             // 如果是真金币加钱
@@ -79,6 +93,9 @@ class Creature {
                 // 获得的真金币数量
                 this.setGold(this.getGold() + money.getValue());
             }
+            //即使不是真金币，钱币的数量也会增加
+            this.setMoney(money,levelNow-1);
+            winner = this;
         }
         if (this.getLife() < 2 && !(enemy instanceof Dwarf)) {
             System.out.println("You don't have enough health to fight for gold.");
@@ -87,23 +104,29 @@ class Creature {
                 // 获得的真金币数量
                 enemy.setGold(enemy.getGold() + money.getValue());
             }
+            //即使不是真金币，钱币的数量也会增加
+            enemy.setMoney(money,levelNow-1);
+            winner = enemy;
         } else if (enemy.getLife() == 0) {
             // 如果是真金币加钱
             if (money.getRealCoin()) {
                 // 获得的真金币数量
                 this.setGold(this.getGold() + money.getValue());
             }
+            //即使不是真金币，钱币的数量也会增加
+            this.setMoney(money,levelNow-1);
+            winner = this;
         } else {
             // this.fight(enemy);
             if (enemy instanceof Dwarf) {
                 // 调用Dwarf类的方法
-                ((Dwarf) enemy).fight(this, money);
+              winner=  ((Dwarf) enemy).fight(this, money,levelNow);
             } else if (enemy instanceof Elf) {
                 // 调用Elf类的方法
-                ((Elf) enemy).fight(this, money);
+               winner= ((Elf) enemy).fight(this, money,levelNow);
             } else if (enemy instanceof Orc) {
                 // 调用Orc类的方法
-                ((Orc) enemy).fight(this, money);
+                winner=((Orc) enemy).fight(this, money,levelNow);
             }
             // 冒险家受伤
             if (this.getLife() <= 2) {
@@ -113,8 +136,11 @@ class Creature {
             }
 
         }
+        return winner;
     }
 
-    public void fight(Creature enemy, Money money) {
+    public Creature fight(Creature enemy, Money money,int levelNow) {
+        Creature winner;
+        return winner = null;
     }
 }

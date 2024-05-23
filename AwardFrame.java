@@ -10,19 +10,30 @@ import javafx.stage.Stage;
 
 public class AwardFrame extends Application {
     private Pane pane = new Pane();
+    private int levelNow;
     private Creature player;
     private Creature enemy;
+
     public void setPlayer(Creature player) {
         this.player = player;
     }
+
     public void setEnemy(Creature enemy) {
         this.enemy = enemy;
     }
+
+    public void setLevelNow(int levelNow) {
+        this.levelNow = levelNow;
+    }
+
+    public int getLevelNow() {
+        return levelNow;
+    }
+
     @Override
-    public void start(Stage stage)  {
+    public void start(Stage stage) {
+        moneySet();
         CoinText();
-        player.setGold(player.getGold()+2);
-        enemy.setGold(enemy.getGold()+2);
         // 创建一个Scene并设置Pane为其根节点
         Scene scene = new Scene(pane, 400, 300);
         // 设置并显示Stage
@@ -30,7 +41,19 @@ public class AwardFrame extends Application {
         stage.setScene(scene);
         stage.show();
     }
-    public void CoinText(){
+
+    public void moneySet() {
+        Money money = new Money();
+        money.setRealCoin(true);
+        money.setValue(2);
+        CoinText();
+        player.setGold(player.getGold() + 2);
+        player.setMoney(money, levelNow - 1);
+        enemy.setGold(enemy.getGold() + 2);
+        enemy.setMoney(money, levelNow - 1);
+    }
+
+    public void CoinText() {
         Text text = new Text(80, 100, "恭喜双方获得了金币奖励！");
         Text text2 = new Text(50, 150, "金币为真，数量均为1，面额为2");
         text.setFont(Font.font(20));

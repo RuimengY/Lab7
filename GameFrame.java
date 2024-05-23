@@ -20,7 +20,7 @@ public class GameFrame extends Application {
     private Button nextLevelButton = new Button("下一关");
 
 
-    public  void setMoney(Money[] moneys) {
+    public void setMoney(Money[] moneys) {
         this.money = moneys;
     }
 
@@ -48,6 +48,10 @@ public class GameFrame extends Application {
         this.destination = destination;
     }
 
+    public Money getOneMoney(Money[] moneyList, int levelNow) {
+        return moneyList[levelNow - 1];
+    }
+
     //package的get方法
     public Package getMyPackage() {
         return myPackage;
@@ -65,6 +69,7 @@ public class GameFrame extends Application {
     public void setPlayer(Creature player) {
         this.player = player;
     }
+
     public void setEnemy(Creature enemy) {
         this.enemy = enemy;
     }
@@ -75,11 +80,10 @@ public class GameFrame extends Application {
         nextLevelButton.setDisable(true);
         System.out.println("levelNow: " + levelNow);
         System.out.println("level: " + level.getLevel());
-        if(levelNow == level.getLevel()+1){
+        if (levelNow == level.getLevel() + 1) {
             EndGameFrame endGameFrame = new EndGameFrame();
             endGameFrame.start(stage);
-        }
-        else{
+        } else {
             StoreButton();
             PlayerStateButton();
             EnemyButton();
@@ -89,7 +93,7 @@ public class GameFrame extends Application {
             LevelText(levelNow);
             FightButton(levelNow);
             BoxOrCoinImage(levelNow);
-            NextLevelButton(stage,levelNow);
+            NextLevelButton(stage, levelNow);
             stage.setScene(new Scene(pane, 800, 600));
             stage.show();
         }
@@ -201,12 +205,13 @@ public class GameFrame extends Application {
         //创建一个“战斗”按钮
         Button fightButton = new Button("开始战斗");
         //如果是奖励关卡，FightButton不可点击
-        if(level1 % 3 == 0){
+        if (level1 % 3 == 0) {
             fightButton.setDisable(true);
             //新建一个窗体显示战斗结果
             AwardFrame awardFrame = new AwardFrame();
             awardFrame.setPlayer(player);
             awardFrame.setEnemy(enemy);
+            awardFrame.setLevelNow(level1);
             awardFrame.start(new Stage());
         }
         //设置按钮字体
@@ -228,12 +233,14 @@ public class GameFrame extends Application {
             fightFrame.setLevel(level);
             fightFrame.setLevelNow(level1);
             fightFrame.start(new Stage());
-            nextLevelButton.setDisable(false);
-            //没关只能战斗一次
+            nextLevelButton.setDisable(false);//能够点下一关
+            //每关只能战斗一次
             fightButton.setDisable(true);
+            RealCoinImage(level1);//展示真正的金币
         });
     }
-    public void NextLevelButton(Stage stage,int levelNow) {
+
+    public void NextLevelButton(Stage stage, int levelNow) {
         //设置按钮字体
         nextLevelButton.setStyle("-fx-font-size: 20");
         //设置按钮的位置
@@ -241,10 +248,9 @@ public class GameFrame extends Application {
         //设置按钮的大小
         nextLevelButton.setPrefSize(150, 60);
         //只有在战斗结束后(FightButton被按下之后或者是奖励关卡)才会显示这个按钮
-        if(levelNow % 3 == 0){
+        if (levelNow % 3 == 0) {
             nextLevelButton.setDisable(false);
-        }
-        else{
+        } else {
             nextLevelButton.setDisable(true);
         }
         //在这里添加将nextLevelButton添加到界面的代码
@@ -260,6 +266,7 @@ public class GameFrame extends Application {
             gameFrame.start(stage);
         });
     }
+
     public void DestinationText() {
         // 创建一个文本框显示目的地(destination)
         Text destinationText = new Text("Destination: " + destination);
@@ -270,8 +277,9 @@ public class GameFrame extends Application {
         // 在这里添加将destinationText添加到界面的代码
         pane.getChildren().add(destinationText);
     }
+
     public void BoxOrCoinImage(int level1) {
-        if(level1 % 3 == 0){
+        if (level1 % 3 == 0) {
             //输出箱子的图像
             Image boxImage = new Image("file:photos/box.png");
             //创建一个ImageView对象
@@ -280,8 +288,7 @@ public class GameFrame extends Application {
             boxImageView.relocate(300, 200);
             //在这里添加将boxImage添加到界面的代码
             pane.getChildren().add(boxImageView);
-        }
-        else{
+        } else {
             //输出金币的图像
             Image coinImage = new Image("file:photos/coin.png");
             //创建一个ImageView对象
@@ -291,6 +298,30 @@ public class GameFrame extends Application {
             //在这里添加将coinImage添加到界面的代码
             pane.getChildren().add(coinImageView);
         }
+    }
+
+    public void RealCoinImage(int level) {
+        Money oneMoney = getOneMoney(money, level);
+        if (oneMoney.getRealCoin()) {
+            //输出金币的图像
+            Image coinImage = new Image("file:photos/coin.png");
+            //创建一个ImageView对象
+            ImageView coinImageView = new ImageView(coinImage);
+            //设置金币图像的位置
+            coinImageView.relocate(300, 200);
+            //在这里添加将coinImage添加到界面的代码
+            pane.getChildren().add(coinImageView);
+        } else {
+            //输出箱子的图像
+            Image boxImage = new Image("file:photos/falseCoin.png");
+            //创建一个ImageView对象
+            ImageView boxImageView = new ImageView(boxImage);
+            //设置箱子图像的位置
+            boxImageView.relocate(300, 200);
+            //在这里添加将boxImage添加到界面的代码
+            pane.getChildren().add(boxImageView);
+        }
+
     }
 
 }

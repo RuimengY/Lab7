@@ -18,7 +18,8 @@ public class Orc extends Creature {
     }
 
     @Override
-    public void fight(Creature Hobbit, Money money) {
+    public Creature fight(Creature Hobbit, Money money, int levelNow) {
+        Creature winner = null;
         int playerLife = Hobbit.getLife();
         int enemyLife = this.getLife();
         double random = Math.random();
@@ -27,6 +28,9 @@ public class Orc extends Creature {
                 if (money.getRealCoin()) {
                     Hobbit.setGold(Hobbit.getGold() + money.getValue());
                 }
+                //即使不是真金币，钱也会在相应位置增加
+                Hobbit.setMoney(money, levelNow - 1);
+                winner = Hobbit;
                 if (Hobbit.getSkill()[0] == 1) {
                     this.setLife(this.getLife() - 3);
                 } else {
@@ -39,12 +43,18 @@ public class Orc extends Creature {
                 if (money.getRealCoin()) {
                     this.setGold(this.getGold() + 1);
                 }
+                //即使不是真金币，钱也会在相应位置增加
+                this.setMoney(money, levelNow - 1);
+                winner = this;
             }
         } else if (playerLife < enemyLife) {
             if (random < 0.4) {
                 if (money.getRealCoin()) {
                     Hobbit.setGold(Hobbit.getGold() + money.getValue());
                 }
+                //即使不是真金币，钱也会在相应位置增加
+                Hobbit.setMoney(money, levelNow - 1);
+                winner = Hobbit;
                 if (Hobbit.getSkill()[0] == 1) {
                     this.setLife(this.getLife() - 3);
                 } else {
@@ -57,12 +67,18 @@ public class Orc extends Creature {
                 if (money.getRealCoin()) {
                     this.setGold(this.getGold() + 1);
                 }
+                //即使不是真金币，钱也会在相应位置增加
+                this.setMoney(money, levelNow - 1);
+                winner = this;
             }
         } else {
             if (random < 0.6) {
                 if (money.getRealCoin()) {
                     Hobbit.setGold(Hobbit.getGold() + money.getValue());
                 }
+                //即使不是真金币，钱也会在相应位置增加
+                Hobbit.setMoney(money, levelNow - 1);
+                winner = Hobbit;
                 if (Hobbit.getSkill()[0] == 1) {
                     this.setLife(this.getLife() - 3);
                 } else {
@@ -75,7 +91,11 @@ public class Orc extends Creature {
                 if (money.getRealCoin()) {
                     this.setGold(this.getGold() + 1);
                 }
+                //即使不是真金币，钱也会在相应位置增加
+                this.setMoney(money, levelNow - 1);
+                winner = this;
             }
         }
+        return winner;
     }
 }

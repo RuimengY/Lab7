@@ -10,7 +10,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class PlayerStateFrame extends Application {
+public class PlayerStateFrame extends StateFrame {
     private Creature player = new Creature();
     private Pane pane = new Pane();
 
@@ -26,7 +26,7 @@ public class PlayerStateFrame extends Application {
     @Override
     public void start(Stage stage) {
         Heart(30, 50, player.getLife());
-        Gold(30, 100, player.getGold());
+        Gold(30, 100, player.getMoney().length, pane, player);
         StoreButton();
         // 创建一个Scene并设置Pane为其根节点
         Scene scene = new Scene(pane, 400, 300);
@@ -35,7 +35,6 @@ public class PlayerStateFrame extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
     //用爱心图形的数量表示生命值
     public void Heart(int x, int y, int life) {
         for (int i = 0; i < life; i++) {
@@ -46,25 +45,6 @@ public class PlayerStateFrame extends Application {
             pane.getChildren().add(heart);
         }
     }
-
-    //用金币图像表示金币数量
-    public void Gold(int x, int y, int gold) {
-        for (int i = 0; i < gold; i++) {
-            //将text换成Image
-            /*Text coin = new Text(x + i * 20, y, "💰");
-            coin.setFont(Font.font(20));
-            coin.setFill(Color.GOLD);
-            pane.getChildren().add(coin); */
-            Image coin = new Image("file:photos/coin.png");
-            ImageView imageView = new ImageView(coin);
-            imageView.setFitHeight(20);
-            imageView.setFitWidth(20);
-            imageView.setX(x + i * 20);
-            imageView.setY(y);
-            pane.getChildren().add(imageView);
-        }
-    }
-
     //道具的三个按钮(按钮分别是package中的生命药剂、暴击药剂和闪避符咒)
     public void StoreButton() {
         Text lifePotion = new Text(40, 250, "生命药剂");

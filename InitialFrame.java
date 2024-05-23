@@ -153,9 +153,15 @@ public class InitialFrame extends Application {
                 // 在这里添加开始游戏的代码
                 GameFrame gameFrame = new GameFrame();
                 money = new Money[level1.getLevel()];
+
+
                 firstSetMoney(money);
                 gameFrame.setLevel(level1);//将关卡数确定
                 gameFrame.setMoney(money);//在进入游戏之前把每一关的money的真假确定好
+                for (int i = 0; i < level1.getLevel(); i++) {
+                    System.out.println("第" + (i + 1) + "关的金币为" + money[i].getValue() + "，真假为" + money[i].getRealCoin());
+
+                }
                 gameFrame.setEnemy(enemy);//在进入游戏之前把每一关的enemy确定好
                 gameFrame.setPlayer(player);//在进入游戏之前把player设计好
                 gameFrame.setDestination(getDestination());//将目的地确定

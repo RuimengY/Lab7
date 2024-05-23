@@ -32,9 +32,15 @@ public class Money {
     public int getValue() {
         return value;
     }
+    public void setValue(int value) {
+        this.value = value;
+    }
 
     public boolean getRealCoin() {
         return realCoin;
+    }
+    public void setRealCoin(boolean realCoin) {
+        this.realCoin = realCoin;
     }
 
 }

@@ -27,8 +27,9 @@ public class Level {
     }
 
     // 每一关的实现
-    // 如果冒险者和对手为了金币而战,胜者会获得,失败者的生命值会减少2.生命值多的一方有0.7的概率获胜,如果生命值相同,则双方有都0.5的概率获胜.如果对手的生命值降到0,则冒险者会在接下来的每一关都获得金币.每一关结束时,在控制台输出每个生物的生命值和当前拥有的金币.
-    public void everyLevel(Creature player, Creature enemy,  Money[] moneys, int level) {
+    // 如果冒险者和对手为了金币而战,胜者会获得金币,失败者的生命值会减少2.生命值多的一方有0.7的概率获胜,如果生命值相同,则双方有都0.5的概率获胜.如果对手的生命值降到0,则冒险者会在接下来的每一关都获得金币.每一关结束时,在控制台输出每个生物的生命值和当前拥有的金币.
+    public Creature everyLevel(Creature player, Creature enemy,  Money[] moneys, int level) {
+        Creature winner = null;
         if (player.getSkill()[0] == 1) {
             player.setLife(player.getLife() + 2);
         }
@@ -38,11 +39,13 @@ public class Level {
             enemy.setLife(enemy.getLife() + 1);
         } else if (level != 1 && enemy.getLife() == 0) {
             player.setLife(player.getLife() + 1);
+            winner = player;
         }
         Money money = moneys[level - 1];
-        player.attack(enemy, money);
+        winner = player.attack(enemy, money, level);
         int[] skill = { 0, 0, 0 };
         player.setSkill(skill);
+        return winner;
     }
 
     // 1.奖励关卡
