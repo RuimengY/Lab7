@@ -12,9 +12,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class InitialFrame extends Application {
-    private Level level;
+    private Level level ;
     private String destination;
     private Pane pane = new Pane();
+    private Money[] money;
+
 
     //level的get方法
     public Level getLevel() {
@@ -153,6 +155,8 @@ public class InitialFrame extends Application {
             if (getLevel() != null && getDestination() != null) {
                 // 在这里添加开始游戏的代码
                 GameFrame gameFrame = new GameFrame();
+                money = new Money[getLevel().getLevel()];
+                gameFrame.setMoney(money);//在进入游戏之前把每一关的money的真假确定好
                 gameFrame.setLevel(getLevel());
                 gameFrame.setDestination(getDestination());
                 gameFrame.start(primaryStage);

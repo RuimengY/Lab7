@@ -2,6 +2,7 @@ package com.exercise.demo;
 
 public class Level {
     private int allLevel;
+    private static int nowLevel = 0;
 
     public int getLevel() {
         return allLevel;
@@ -27,7 +28,7 @@ public class Level {
 
     // 每一关的实现
     // 如果冒险者和对手为了金币而战,胜者会获得,失败者的生命值会减少2.生命值多的一方有0.7的概率获胜,如果生命值相同,则双方有都0.5的概率获胜.如果对手的生命值降到0,则冒险者会在接下来的每一关都获得金币.每一关结束时,在控制台输出每个生物的生命值和当前拥有的金币.
-    public void everyLevel(Creature player, Creature enemy, String destination, Money[] moneys, int level) {
+    public void everyLevel(Creature player, Creature enemy,  Money[] moneys, int level) {
         if (player.getSkill()[0] == 1) {
             player.setLife(player.getLife() + 2);
         }
@@ -55,6 +56,11 @@ public class Level {
         enemy.setGold(enemy.getGold() + money.getValue());
         int[] skill = { 0, 0, 0 };
         player.setSkill(skill);
+    }
+    public int levelNow(){
+        //每次调用的时候将当前关卡数加1
+        nowLevel++;
+        return nowLevel;
     }
 
 }

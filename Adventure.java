@@ -83,7 +83,7 @@ public class Adventure {
         level.setLevel();
         for (int i = 1; i <= level.getLevel(); i++) {
             if (i % 3 != 0) {
-                level.everyLevel(player, enemy, destination, moneys, i);
+                level.everyLevel(player, enemy, moneys, i);
             } else {
                 level.rewardLevel(player, enemy, destination, i);
             }
