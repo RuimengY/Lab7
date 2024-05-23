@@ -15,6 +15,7 @@ public class InitialFrame extends Application {
     private Level level ;
     private String destination;
     private Pane pane = new Pane();
+    private Creature enemy = Creature.randomEnemy();
     private Money[] money;
 
 
@@ -157,6 +158,7 @@ public class InitialFrame extends Application {
                 GameFrame gameFrame = new GameFrame();
                 money = new Money[getLevel().getLevel()];
                 gameFrame.setMoney(money);//在进入游戏之前把每一关的money的真假确定好
+                gameFrame.setEnemy(enemy);//在进入游戏之前把每一关的enemy的对象确定好
                 gameFrame.setLevel(getLevel());
                 gameFrame.setDestination(getDestination());
                 gameFrame.start(primaryStage);

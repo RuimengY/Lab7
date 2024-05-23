@@ -14,9 +14,10 @@ public class GameFrame extends Application {
     private Pane pane = new Pane();
     private Package myPackage = new Package();
     private Creature player = new Creature();
-    private Creature enemy = Creature.randomEnemy();
+    private Creature enemy;
     private Level level = new Level();
     private Money[] money = new Money[level.getLevel()];
+    private Button nextLevelButton = new Button("下一关");
 
 
     public static void setMoney(Money[] moneys) {
@@ -66,10 +67,14 @@ public class GameFrame extends Application {
     public void setPlayer(Creature player) {
         this.player = player;
     }
+    public void setEnemy(Creature enemy) {
+        this.enemy = enemy;
+    }
 
     @Override
     public void start(Stage stage) {
         int levelNow = level.levelNow();
+        nextLevelButton.setDisable(true);
         if(levelNow == level.getLevel()){
             EndGameFrame endGameFrame = new EndGameFrame();
         }
@@ -202,11 +207,10 @@ public class GameFrame extends Application {
         //点击按钮弹出一个新的界面
         fightButton.setOnAction(e -> {
             System.out.println("开始战斗");
+            nextLevelButton.setDisable(false);
         });
     }
     public void NextLevelButton() {
-        //创建一个“下一关”按钮
-        Button nextLevelButton = new Button("下一关");
         //设置按钮字体
         nextLevelButton.setStyle("-fx-font-size: 20");
         //设置按钮的位置
@@ -214,7 +218,6 @@ public class GameFrame extends Application {
         //设置按钮的大小
         nextLevelButton.setPrefSize(150, 60);
         //只有在战斗结束后(FightButton被按下之后或者是奖励关卡)才会显示这个按钮
-        nextLevelButton.setDisable(true);
 
         //在这里添加将nextLevelButton添加到界面的代码
         pane.getChildren().add(nextLevelButton);
