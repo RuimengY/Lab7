@@ -12,18 +12,16 @@ import javafx.stage.Stage;
 public class GameFrame extends Application {
     private String destination;
     private Pane pane = new Pane();
-    private Package myPackage = new Package();
-    private Creature player = new Creature();
+    private Package myPackage = new Package();//一开始背包中为空
+    private Creature player;
     private Creature enemy;
-    private Level level = new Level();
-    private Money[] money = new Money[level.getLevel()];
+    private Level level;
+    private Money[] money;
     private Button nextLevelButton = new Button("下一关");
 
 
-    public static void setMoney(Money[] moneys) {
-        for (int i = 0; i < moneys.length; i++) {
-            moneys[i] = new Money(i);
-        }
+    public  void setMoney(Money[] moneys) {
+        this.money = moneys;
     }
 
     NewProductList newProductList = new NewProductList();
@@ -75,21 +73,27 @@ public class GameFrame extends Application {
     public void start(Stage stage) {
         int levelNow = level.levelNow();
         nextLevelButton.setDisable(true);
-        if(levelNow == level.getLevel()){
+        System.out.println("levelNow: " + levelNow);
+        System.out.println("level: " + level.getLevel());
+        if(levelNow == level.getLevel()+1){
             EndGameFrame endGameFrame = new EndGameFrame();
+            endGameFrame.start(stage);
         }
-        StoreButton();
-        PlayerStateButton();
-        EnemyButton();
-        PlayerImage();
-        EnemyImage();
-        DestinationText();
-        LevelText(levelNow);
-        FightButton(levelNow);
-        BoxOrCoinImage(levelNow);
-        NextLevelButton();
-        stage.setScene(new Scene(pane, 800, 600));
-        stage.show();
+        else{
+            StoreButton();
+            PlayerStateButton();
+            EnemyButton();
+            PlayerImage();
+            EnemyImage();
+            DestinationText();
+            LevelText(levelNow);
+            FightButton(levelNow);
+            BoxOrCoinImage(levelNow);
+            NextLevelButton(stage,levelNow);
+            stage.setScene(new Scene(pane, 800, 600));
+            stage.show();
+        }
+
     }
 
     public void LevelText(int everyLevel) {
@@ -196,6 +200,15 @@ public class GameFrame extends Application {
     public void FightButton(int level1) {
         //创建一个“战斗”按钮
         Button fightButton = new Button("开始战斗");
+        //如果是奖励关卡，FightButton不可点击
+        if(level1 % 3 == 0){
+            fightButton.setDisable(true);
+            //新建一个窗体显示战斗结果
+            AwardFrame awardFrame = new AwardFrame();
+            awardFrame.setPlayer(player);
+            awardFrame.setEnemy(enemy);
+            awardFrame.start(new Stage());
+        }
         //设置按钮字体
         fightButton.setStyle("-fx-font-size: 20");
         //设置按钮的位置
@@ -207,10 +220,20 @@ public class GameFrame extends Application {
         //点击按钮弹出一个新的界面
         fightButton.setOnAction(e -> {
             System.out.println("开始战斗");
+            //新建一个窗体显示战斗结果
+            FightFrame fightFrame = new FightFrame();
+            fightFrame.setPlayer(player);
+            fightFrame.setEnemy(enemy);
+            fightFrame.setMoney(money);
+            fightFrame.setLevel(level);
+            fightFrame.setLevelNow(level1);
+            fightFrame.start(new Stage());
             nextLevelButton.setDisable(false);
+            //没关只能战斗一次
+            fightButton.setDisable(true);
         });
     }
-    public void NextLevelButton() {
+    public void NextLevelButton(Stage stage,int levelNow) {
         //设置按钮字体
         nextLevelButton.setStyle("-fx-font-size: 20");
         //设置按钮的位置
@@ -218,16 +241,23 @@ public class GameFrame extends Application {
         //设置按钮的大小
         nextLevelButton.setPrefSize(150, 60);
         //只有在战斗结束后(FightButton被按下之后或者是奖励关卡)才会显示这个按钮
-
+        if(levelNow % 3 == 0){
+            nextLevelButton.setDisable(false);
+        }
+        else{
+            nextLevelButton.setDisable(true);
+        }
         //在这里添加将nextLevelButton添加到界面的代码
         pane.getChildren().add(nextLevelButton);
         //点击按钮弹出一个新的界面
         nextLevelButton.setOnAction(e -> {
             GameFrame gameFrame = new GameFrame();
             gameFrame.setLevel(level);
+            gameFrame.setMoney(money);
+            gameFrame.setPlayer(player);
+            gameFrame.setEnemy(enemy);
             gameFrame.setDestination(destination);
-            gameFrame.start(new Stage());
-           // level.everyLevel(player, enemy, money, level1);
+            gameFrame.start(stage);
         });
     }
     public void DestinationText() {

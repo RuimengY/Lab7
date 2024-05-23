@@ -33,7 +33,7 @@ public class Money {
         return value;
     }
 
-    public boolean getrealCoin() {
+    public boolean getRealCoin() {
         return realCoin;
     }
 

@@ -75,7 +75,7 @@ class Creature {
         // 如果敌人是矮人而且敌人的生命值小于等于2，那么霍比特人直接获得金币
         if (enemy instanceof Dwarf && enemy.getLife() <= 2) {
             // 如果是真金币加钱
-            if (money.getrealCoin()) {
+            if (money.getRealCoin()) {
                 // 获得的真金币数量
                 this.setGold(this.getGold() + money.getValue());
             }
@@ -83,13 +83,13 @@ class Creature {
         if (this.getLife() < 2 && !(enemy instanceof Dwarf)) {
             System.out.println("You don't have enough health to fight for gold.");
             // 如果是真金币加钱
-            if (money.getrealCoin()) {
+            if (money.getRealCoin()) {
                 // 获得的真金币数量
                 enemy.setGold(enemy.getGold() + money.getValue());
             }
         } else if (enemy.getLife() == 0) {
             // 如果是真金币加钱
-            if (money.getrealCoin()) {
+            if (money.getRealCoin()) {
                 // 获得的真金币数量
                 this.setGold(this.getGold() + money.getValue());
             }

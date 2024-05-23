@@ -8,7 +8,7 @@ public class Level {
         return allLevel;
     }
 
-    public void setAllLevel(int allLevel) {
+    public void setLevelNumber(int allLevel) {
         this.allLevel = allLevel;
     }
 
@@ -32,7 +32,6 @@ public class Level {
         if (player.getSkill()[0] == 1) {
             player.setLife(player.getLife() + 2);
         }
-
         // 每一关开始的时候冒险者和对手的生命值＋1(如果对手生命值为0,则只有冒险者的生命值＋1)
         if (level != 1 && enemy.getLife() != 0) {
             player.setLife(player.getLife() + 1);
@@ -44,7 +43,6 @@ public class Level {
         player.attack(enemy, money);
         int[] skill = { 0, 0, 0 };
         player.setSkill(skill);
-
     }
 
     // 1.奖励关卡

@@ -12,22 +12,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class InitialFrame extends Application {
-    private Level level ;
+    private Level level1 = new Level();
     private String destination;
     private Pane pane = new Pane();
     private Creature enemy = Creature.randomEnemy();
+    private Creature player = new Creature();
     private Money[] money;
 
-
-    //level的get方法
-    public Level getLevel() {
-        return level;
-    }
-
-    //level的set方法
-    public void setLevel(Level level) {
-        this.level = level;
-    }
 
     //destination的get方法
     public String getDestination() {
@@ -131,9 +122,9 @@ public class InitialFrame extends Application {
             } else {
                 // 在这里处理用户的输入
                 System.out.println("Level: " + level);
-                Level level1 = new Level();
-                level1.setAllLevel(Integer.parseInt(level));
-                setLevel(level1);
+                int allLevel = Integer.parseInt(level);
+                //将用户输入的关卡数设置到level中
+                level1.setLevelNumber(allLevel);
             }
         });
         // 设置输入框和提交按钮的位置
@@ -141,6 +132,11 @@ public class InitialFrame extends Application {
         submitButton2.relocate(500, 300);
         // 将输入框和提交按钮添加到Pane中
         pane.getChildren().addAll(levelField, submitButton2);
+    }
+    public void firstSetMoney(Money[] moneys){
+            for (int i = 0; i < moneys.length; i++) {
+                moneys[i] = new Money(i);
+            }
     }
 
     public void playGameSet(Stage primaryStage) {
@@ -153,14 +149,16 @@ public class InitialFrame extends Application {
         startButton.setPrefSize(150, 80);
         startButton.setOnAction(e -> {
             //如果此时level和destination都不为空，则进入游戏界面
-            if (getLevel() != null && getDestination() != null) {
+            if (level1.getLevel() != 0 && getDestination() != null) {
                 // 在这里添加开始游戏的代码
                 GameFrame gameFrame = new GameFrame();
-                money = new Money[getLevel().getLevel()];
+                money = new Money[level1.getLevel()];
+                firstSetMoney(money);
+                gameFrame.setLevel(level1);//将关卡数确定
                 gameFrame.setMoney(money);//在进入游戏之前把每一关的money的真假确定好
-                gameFrame.setEnemy(enemy);//在进入游戏之前把每一关的enemy的对象确定好
-                gameFrame.setLevel(getLevel());
-                gameFrame.setDestination(getDestination());
+                gameFrame.setEnemy(enemy);//在进入游戏之前把每一关的enemy确定好
+                gameFrame.setPlayer(player);//在进入游戏之前把player设计好
+                gameFrame.setDestination(getDestination());//将目的地确定
                 gameFrame.start(primaryStage);
                 System.out.println("开始游戏");
 

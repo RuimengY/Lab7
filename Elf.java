@@ -17,7 +17,7 @@ public class Elf extends Creature {
         double random = Math.random();
         if (random > this.winRate) {
             // 如果是真金币加钱
-            if (money.getrealCoin()) {
+            if (money.getRealCoin()) {
                 // 获得的真金币数量
                 Hobbit.setGold(Hobbit.getGold() + money.getValue());
             }
@@ -27,7 +27,7 @@ public class Elf extends Creature {
                 this.setLife(this.getLife() - 2);
             }
         } else {
-            if (money.getrealCoin()) {
+            if (money.getRealCoin()) {
                 this.setGold(this.getGold() + money.getValue());
             }
             if (Hobbit.getSkill()[1] == 0) {

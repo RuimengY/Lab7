@@ -24,7 +24,7 @@ public class Orc extends Creature {
         double random = Math.random();
         if (playerLife > enemyLife) {
             if (random < 0.7) {
-                if (money.getrealCoin()) {
+                if (money.getRealCoin()) {
                     Hobbit.setGold(Hobbit.getGold() + money.getValue());
                 }
                 if (Hobbit.getSkill()[0] == 1) {
@@ -36,13 +36,13 @@ public class Orc extends Creature {
                 if (Hobbit.getSkill()[1] == 0) {
                     Hobbit.setLife(Hobbit.getLife() - 2);
                 }
-                if (money.getrealCoin()) {
+                if (money.getRealCoin()) {
                     this.setGold(this.getGold() + 1);
                 }
             }
         } else if (playerLife < enemyLife) {
             if (random < 0.4) {
-                if (money.getrealCoin()) {
+                if (money.getRealCoin()) {
                     Hobbit.setGold(Hobbit.getGold() + money.getValue());
                 }
                 if (Hobbit.getSkill()[0] == 1) {
@@ -54,13 +54,13 @@ public class Orc extends Creature {
                 if (Hobbit.getSkill()[1] == 0) {
                     Hobbit.setLife(Hobbit.getLife() - 2);
                 }
-                if (money.getrealCoin()) {
+                if (money.getRealCoin()) {
                     this.setGold(this.getGold() + 1);
                 }
             }
         } else {
             if (random < 0.6) {
-                if (money.getrealCoin()) {
+                if (money.getRealCoin()) {
                     Hobbit.setGold(Hobbit.getGold() + money.getValue());
                 }
                 if (Hobbit.getSkill()[0] == 1) {
@@ -72,7 +72,7 @@ public class Orc extends Creature {
                 if (Hobbit.getSkill()[1] == 0) {
                     Hobbit.setLife(Hobbit.getLife() - 2);
                 }
-                if (money.getrealCoin()) {
+                if (money.getRealCoin()) {
                     this.setGold(this.getGold() + 1);
                 }
             }
