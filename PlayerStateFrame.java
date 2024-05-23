@@ -2,6 +2,7 @@ package com.exercise.demo;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -54,25 +55,28 @@ public class PlayerStateFrame extends StateFrame {
     }
     //道具的三个按钮(按钮分别是package中的生命药剂、暴击药剂和闪避符咒)
     public void StoreButton() {
-        Text lifePotion = new Text(40, 250, "生命药剂");
+        Button lifePotion = new Button("生命药剂");
+        lifePotion.setLayoutX(30);
+        lifePotion.setLayoutY(250);
         lifePotion.setFont(Font.font(20));
-        lifePotion.setFill(Color.BLUE);
         if(pack.getSkill(0) == 0){
            //不显示生命药剂
             lifePotion.setVisible(false);
         }
         pane.getChildren().add(lifePotion);
-        Text crtPotion = new Text(160, 250, "暴击药剂");
+        Button crtPotion = new Button("暴击药剂");
+        crtPotion.setLayoutX(150);
+        crtPotion.setLayoutY(250);
         crtPotion.setFont(Font.font(20));
-        crtPotion.setFill(Color.BLUE);
         if(pack.getSkill(1) == 0){
             //不显示暴击药剂
             crtPotion.setVisible(false);
         }
         pane.getChildren().add(crtPotion);
-        Text dodgePotion = new Text(280, 250, "闪避符咒");
+        Button dodgePotion = new Button("闪避符咒");
+        dodgePotion.setLayoutX(270);
+        dodgePotion.setLayoutY(250);
         dodgePotion.setFont(Font.font(20));
-        dodgePotion.setFill(Color.BLUE);
         if(pack.getSkill(2) == 0){
             //不显示闪避符咒
             dodgePotion.setVisible(false);

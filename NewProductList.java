@@ -40,6 +40,101 @@ public class NewProductList {
             // 如果金币足够，购买商品
             myPackage.addProduct(product);
             player.setGold(player.getGold() - product.getPrice());
+            // 从Money的角度将金币减少
+            Money money = new Money();
+            money.setValue(0);
+            money.setRealCoin(true);
+            Boolean finish = false;
+            if (product.getIndex() == 2) {
+                for (int i = 0; i < 20; i++) {//20是最高的金币数量
+                    if (player.getMoney()[i] == null) {
+                        continue;
+                    }
+                    if (player.getMoney()[i].getValue() == 2) {
+                        player.setMoney(money, i);
+                        finish = true;
+                        break;
+                    }
+                }
+                if (!finish) {
+                    int count = 0;
+                    for (int i = 0; i < 20; i++) {//20是最高的金币数量
+                        if (player.getMoney()[i] == null) {
+                            continue;
+                        }
+                        if (player.getMoney()[i].getValue() == 1) {
+                            player.setMoney(money, i);
+                            count++;
+                        }
+                        if (count == 2) {
+                            break;
+                        }
+                    }
+                }
+
+            } else {
+                int value = 0;
+                boolean finish1 = false;
+                for (int i = 0; i < 20; i++) {//20是最高的金币数量
+                    if (player.getMoney()[i] == null) {
+                        continue;
+                    }
+                    if (player.getMoney()[i].getValue() == 2) {
+                        player.setMoney(money, i);
+                        value += 2;
+                        finish1 = true;
+                        break;
+                    }
+                }
+                Money money1 = new Money();
+                money1.setValue(1);
+                money1.setRealCoin(true);
+                for (int i = 0; i < 20; i++) {//20是最高的金币数量
+                    if (player.getMoney()[i] == null) {
+                        continue;
+                    }
+                    if (player.getMoney()[i].getValue() == 2) {
+                        player.setMoney(money1, i);
+                        value += 2;
+                        break;
+                    }
+                }
+                if (value == 4) {
+                    finish = true;
+                }
+
+                if (!finish) {
+                    int count = 0;
+                    if (!finish1) {
+                        for (int i = 0; i < 20; i++) {//20是最高的金币数量
+                            if (player.getMoney()[i] == null) {
+                                continue;
+                            }
+                            if (player.getMoney()[i].getValue() == 1) {
+                                player.setMoney(money, i);
+                                count++;
+                            }
+                            if (count == 3) {
+                                break;
+                            }
+                        }
+                    } else {
+                        for (int i = 0; i < 20; i++) {
+                            if (player.getMoney()[i] == null) {
+                                continue;
+                            }
+                            if (player.getMoney()[i].getValue() == 1) {
+                                player.setMoney(money, i);
+                                count++;
+                            }
+                            if (count == 1) {
+                                break;
+                            }
+                        }
+                    }
+
+                }
+            }
             //将商品从商品列表中移除
             data.remove(product);
         }

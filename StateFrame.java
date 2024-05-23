@@ -27,7 +27,7 @@ public class StateFrame extends Application {
                 realMoney1++;
             } else if (!creature.getMoney()[i].getRealCoin() && creature.getMoney()[i].getValue() == 2) {
                 fakeMoney2++;
-            } else {
+            } else if (!creature.getMoney()[i].getRealCoin() && creature.getMoney()[i].getValue() == 1) {
                 fakeMoney1++;
             }
             if ((realMoney1 + realMoney2) >= (fakeMoney1 + fakeMoney2)) {
