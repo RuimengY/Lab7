@@ -83,8 +83,11 @@ public class GameFrame extends Application {
         nextLevelButton.setDisable(true);
         System.out.println("levelNow: " + levelNow);
         System.out.println("level: " + level.getLevel());
-        if (levelNow == level.getLevel() + 1) {
+        if (levelNow == level.getLevel() + 1 || player.getLife() == 0) {
             EndGameFrame endGameFrame = new EndGameFrame();
+            endGameFrame.setPlayer(player);
+            endGameFrame.setEnemy(enemy);
+            endGameFrame.setMyPackage(myPackage);
             endGameFrame.start(stage);
         } else {
             StoreButton();
@@ -92,7 +95,7 @@ public class GameFrame extends Application {
             EnemyButton();
             PlayerImage();
             EnemyImage();
-            DestinationText();
+            DestinationText(levelNow);
             LevelText(levelNow);
             FightButton(levelNow);
             BoxOrCoinImage(levelNow);
@@ -249,6 +252,9 @@ public class GameFrame extends Application {
     }
 
     public void NextLevelButton(Stage stage, int levelNow) {
+        if (levelNow == level.getLevel()) {
+            nextLevelButton.setText("继续");
+        }
         //设置按钮字体
         nextLevelButton.setStyle("-fx-font-size: 20");
         //设置按钮的位置
@@ -277,15 +283,19 @@ public class GameFrame extends Application {
         });
     }
 
-    public void DestinationText() {
+    public void DestinationText(int level1) {
         // 创建一个文本框显示目的地(destination)
         Text destinationText = new Text("Destination: " + destination);
+        Text leftLevel = new Text("Left level: " + (level.getLevel() - level1));
         //设置destinationText的位置
-        destinationText.relocate(330, 500);
+        destinationText.relocate(320, 500);
+        leftLevel.relocate(350, 550);
         //设置输出字体和显示边框
         destinationText.setStyle("-fx-font-size: 20");
+        leftLevel.setStyle("-fx-font-size: 20");
         // 在这里添加将destinationText添加到界面的代码
-        pane.getChildren().add(destinationText);
+        pane.getChildren().addAll(destinationText, leftLevel);
+
     }
 
     public void BoxOrCoinImage(int level1) {

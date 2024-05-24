@@ -7,12 +7,14 @@ public class Package {
         skill[1] = 0;
         skill[2] = 0;
     }
+
     private int[] skill = new int[3];
 
     public int[] getSkill() {
         return skill;
     }
-    public int getSkill(int index){
+
+    public int getSkill(int index) {
         return skill[index];
     }
 
@@ -70,12 +72,18 @@ public class Package {
         }
 
     }
-    public void addProduct(Product product){
+
+    public void addProduct(Product product) {
         for (int i = 0; i < skill.length; i++) {
-            if (i == product.getIndex() - 1){
+            if (i == product.getIndex() - 1) {
                 skill[i] = 1;
                 break;
             }
         }
+    }
+
+    public void usageOfTools(Creature player, int index) {
+        player.setSkill(index);
+        skill[index] = 0;
     }
 }

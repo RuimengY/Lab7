@@ -32,6 +32,7 @@ public class Level {
         Creature winner = null;
         if (player.getSkill()[0] == 1) {
             player.setLife(player.getLife() + 2);
+            System.out.println("现在: " + player.getLife());
         }
         // 每一关开始的时候冒险者和对手的生命值＋1(如果对手生命值为0,则只有冒险者的生命值＋1)
         if (level != 1 && enemy.getLife() != 0) {
